@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Place Recommender</title>
+</head>
+<body>
+    <h1>Place Recommender</h1>
+    <form id="recommendForm">
+        <label for="region">Region:</label>
+        <input type="text" id="region" name="region" required><br>
+
+        <label for="subcategory">Subcategory:</label>
+        <input type="text" id="subcategory" name="subcategory" required><br>
+
+        <label for="subtype">Subtype:</label>
+        <input type="text" id="subtype" name="subtype"><br>
+
+        <button type="submit">Get Recommendations</button>
+    </form>
+
+    <div id="recommendations"></div>
+
+    <script>
+        document.getElementById('recommendForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const region = document.getElementById('region').value;
+            const subcategory = document.getElementById('subcategory').value;
+            const subtype = document.getElementById('subtype').value;
+
+            fetch('/recommend', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ region, subcategory, subtype })
+            })
+            .then(response => response.json())
+            .then(recommendations => {
+                const recommendationsDiv = document.getElementById('recommendations');
+                recommendationsDiv.innerHTML = '';
+
+                recommendations.forEach(place => {
+                    const placeDiv = document.createElement('div');
+                    placeDiv.textContent = `${place.name} - Rating: ${place.rating} - Reviews: ${place.numberOfReviews} - Recommendation Score: ${place.recommendation_score}`;
+                    recommendationsDiv.appendChild(placeDiv);
+                });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
+</html>

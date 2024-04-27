@@ -1,0 +1,14 @@
+{
+  "name": "tourist-recommendation",
+  "version": "1.0.0",
+  "description": "Tourist_Place_Recommendation system ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Devavrat Jitendra Patil <devavratptl23@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
